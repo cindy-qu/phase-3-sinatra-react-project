@@ -11,6 +11,10 @@ class ApplicationController < Sinatra::Base
     users.to_json(include: :songs)
   end
 
+  get "/api/users" do
+    users = User.all
+  end
+
   get "/api/users/:id" do
     users = User.find(params[:id])
     users.to_json(include: :songs)
