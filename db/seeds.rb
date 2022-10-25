@@ -5,7 +5,7 @@ puts "🌱 Seeding spices..."
 # Seed your database here
 # User data
 50.times do
-    User.create(username: Faker::FunnyName.name )
+    User.create(username: Faker::FunnyName.unique.name )
 end
 
 
