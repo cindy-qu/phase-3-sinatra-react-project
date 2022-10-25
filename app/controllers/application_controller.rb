@@ -41,6 +41,22 @@ class ApplicationController < Sinatra::Base
   
   end
 
+ 
+  get "/api/songs/:id" do
+    songs = Song.find(params[:id])
+    songs.to_json(include: :collections)
+
+  end
+
+
+  # returns the average rating for a song
+  get '/average-song-rating/:id' do
+
+    songs = Song.find(params[:id]).average_rating
+    songs.to_json
+   end
+ 
+ 
 
 
 end
