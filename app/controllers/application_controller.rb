@@ -11,10 +11,32 @@ class ApplicationController < Sinatra::Base
     users.to_json(include: :songs)
   end
 
-  get "/api/users/:id" do
-    users = User.find(params[:id])
-    users.to_json(include: :songs)
+  get "/api/users" do
+    users = User.all
   end
 
+  get "/api/users/:id" do
+    users = User.find(params[:id])
+    users.to_json(include: {
+                    collections: {
+                      include: [:song]
+                    }
+    })
+  end
+  
+
+
+
+  post "/api/users/:id/" do
+    
+    songs = Song.create(title: params[:title], artist: params[:artist], genre: params[:genre])
+    songs.to_json
+    collections = Collection.create(song_rating: params[:song_rating], user_id: params[:user_id], song_id: Song.last.id)
+  
+    collections.to_json
+  
+  end
+ 
+ 
 
 end
