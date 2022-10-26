@@ -24,6 +24,8 @@ class ApplicationController < Sinatra::Base
     })
   end
 
+
+
   get "/api/user/:username" do
     user = User.find(params[:username])
     user.to_json
@@ -46,6 +48,12 @@ class ApplicationController < Sinatra::Base
     songs = Song.find(params[:id])
     songs.to_json(include: :collections)
 
+  end
+
+   
+  get "/api/collections/:id" do
+    collections = Collection.find(params[:id])
+    collections.to_json(include:  [:song])
   end
 
 
