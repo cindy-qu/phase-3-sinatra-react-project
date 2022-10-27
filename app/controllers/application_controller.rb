@@ -26,9 +26,9 @@ class ApplicationController < Sinatra::Base
 
 
 
-  get "/api/user/:username" do
-    user = User.find(params[:username])
-    user.to_json
+  get "/api/users/user_search/:username" do
+    user = User.find_by(username: params[:username])
+    user.to_json(include: [:songs])
   end
 
 
@@ -43,39 +43,17 @@ class ApplicationController < Sinatra::Base
   
   end
 
- 
+
   get "/api/songs/:id" do
     songs = Song.find(params[:id])
     songs.to_json(include: :collections)
 
   end
 
-   
+
   get "/api/collections/:id" do
     collections = Collection.find(params[:id])
     collections.to_json(include:  [:song])
-  end
-
-
-  patch "/api/collections/:id" do
-    collections = Collection.find(params[:id])
-    collections.update(
-        song_rating: params[:song_rating]
-
-    )
-    collections.to_json(include:  [:song])
-  
-  end
-
-
-
-
-  # delete
-  delete '/api/songs/:id' do
-    collections = Collection.find(params[:id])
-    collections.destroy.to_json(include:  [:song])
-    songs  = Song.find(params[:id])
-    songs.destroy.to_json
   end
 
 
@@ -84,9 +62,9 @@ class ApplicationController < Sinatra::Base
 
     songs = Song.find(params[:id]).average_rating
     songs.to_json
-   end
- 
- 
+  end
+
+
 
 
 end
