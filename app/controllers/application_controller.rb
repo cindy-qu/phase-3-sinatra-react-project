@@ -36,10 +36,10 @@ class ApplicationController < Sinatra::Base
   post "/api/users/:id/" do
     
     songs = Song.create(title: params[:title], artist: params[:artist], genre: params[:genre])
-    songs.to_json
+
     collections = Collection.create(song_rating: params[:song_rating], user_id: params[:user_id], song_id: Song.last.id)
   
-    collections.to_json
+    songs.to_json
   
   end
 
