@@ -56,7 +56,26 @@ class ApplicationController < Sinatra::Base
     collections.to_json(include:  [:song])
   end
 
+  patch "/api/collections/:id" do
+    collections = Collection.find(params[:id])
+    collections.update(
+        song_rating: params[:song_rating]
 
+    )
+    collections.to_json(include:  [:song])
+  
+  end
+
+
+
+
+  # delete
+  delete '/api/songs/:id' do
+    collections = Collection.find(params[:id])
+    collections.destroy.to_json(include:  [:song])
+    songs  = Song.find(params[:id])
+    songs.destroy.to_json
+  end
   # returns the average rating for a song
   get '/average-song-rating/:id' do
 
